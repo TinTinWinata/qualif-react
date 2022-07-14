@@ -24,7 +24,7 @@ export function CardButton({ repo, children }) {
   const { user } = GetUser();
   const navigate = useNavigate();
   const handleClick = () => {
-    navigate("/detail/" + user.name + "-" + repo.name); 
+    navigate("/detail/" + user.login + "-" + repo.name);
   };
 
   return <StyledCardButton onClick={handleClick}>{children}</StyledCardButton>;

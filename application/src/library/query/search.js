@@ -7,6 +7,7 @@ const SEARCH = gql`
       description
       createdAt
       pushedAt
+
       collaborators(last: 10) {
         nodes {
           name
@@ -14,6 +15,17 @@ const SEARCH = gql`
         }
       }
       owner {
+        repositories(last: 10) {
+          nodes {
+            name
+            createdAt
+            description
+            pushedAt
+            nameWithOwner
+            url
+          }
+        }
+        login
         avatarUrl
         url
       }

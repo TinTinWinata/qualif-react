@@ -4,12 +4,16 @@ export const THEME = {
   light: {
     background: "#ffffff",
     foreground: "#222222",
-    backdrop: "#eeeeee",
+    backdrop: "#f7f7f7",
+    detail: "#737373",
+    moreBackdrop: "#ebebeb",
   },
   dark: {
     background: "#222222",
     foreground: "#ffffff",
     backdrop: "#303030",
+    detail: "#d6d6d6",
+    moreBackdrop: "#212121",
   },
 };
 const ThemeContext = createContext();
