@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 const SEARCH = gql`
-  query {
-    repository(name: "CHello", owner: "TinTinWinata") {
+  query repository($name: String!, $owner: String!) {
+    repository(name: $name, owner: $owner) {
       name
       description
       createdAt

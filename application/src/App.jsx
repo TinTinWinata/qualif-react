@@ -44,8 +44,6 @@ function App() {
     cache: new InMemoryCache(),
   });
 
-  console.log("client ", client);
-
   return (
     <React.Fragment>
       <BrowserRouter>
