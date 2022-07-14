@@ -2,15 +2,17 @@ import { Link } from "react-router-dom";
 import { Fragment } from "react";
 import { Menu, Popover, Transition } from "@headlessui/react";
 import { SearchIcon } from "@heroicons/react/solid";
-import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
+import {
+  BellIcon,
+  EmojiHappyIcon,
+  MenuIcon,
+  XIcon,
+} from "@heroicons/react/outline";
 import { GetUser } from "../library/context/UserContext";
+import { useTheme } from "../library/context/ThemeContext";
+import { css } from "@emotion/react";
+import { Loading } from "./loading";
 
-const user = {
-  name: "Chelsea Hagon",
-  email: "chelseahagon@example.com",
-  avatarUrl:
-    "https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-};
 const navigation = [];
 const userNavigation = [
   { name: "My Favorite", href: "/favorite" },
@@ -21,21 +23,41 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
+function EmojiIcon() {
+  const { changeTheme } = useTheme();
+  const handleClick = () => {
+    changeTheme();
+  };
+
+  return (
+    <EmojiHappyIcon
+      onClick={handleClick}
+      className=" h-6 w-6 cursor-pointer"
+      aria-hidden="true"
+    />
+  );
+}
+
 export default function Navbar() {
+  const { currTheme } = useTheme();
+
   const { user } = GetUser();
   if (!user) {
-    return <p>Loading</p>;
+    return <Loading></Loading>;
   }
 
   return (
     <>
-      {/* When the mobile menu is open, add `overflow-hidden` to the `body` element to prevent double scrollbars */}
       <Popover
         as="header"
+        style={{
+          backgroundColor: currTheme.background,
+          color: currTheme.foreground,
+        }}
         className={({ open }) =>
           classNames(
             open ? "fixed inset-0 z-40 overflow-y-auto" : "",
-            "bg-white shadow-sm lg:static lg:overflow-y-visible"
+            "shadow-sm lg:static lg:overflow-y-visible"
           )
         }
       >
@@ -46,7 +68,7 @@ export default function Navbar() {
                 <div className="flex md:absolute md:left-0 md:inset-y-0 lg:static xl:col-span-2">
                   <div className="flex-shrink-0 flex items-center">
                     <Link to="/home">
-                      <h1 className="font-bold text-gray-500">Welcome</h1>
+                      <h1 className="font-bold ">Welcome</h1>
                     </Link>
                   </div>
                 </div>
@@ -56,27 +78,13 @@ export default function Navbar() {
                       <label htmlFor="search" className="sr-only">
                         Search
                       </label>
-                      <div className="relative py-3">
-                        {/* <div className="pointer-events-none absolute inset-y-0 left-0 pl-3 flex items-center">
-                          <SearchIcon
-                            className="h-5 w-5 text-gray-400"
-                            aria-hidden="true"
-                          />
-                        </div>
-                        <input
-                          id="search"
-                          name="search"
-                          className="block w-full bg-white border border-gray-300 rounded-md py-2 pl-10 pr-3 text-sm placeholder-gray-500 focus:outline-none focus:text-gray-900 focus:placeholder-gray-400 focus:ring-1 focus:ring-gray-500 focus:border-gray-500 sm:text-sm"
-                          placeholder="Search"
-                          type="search"
-                        /> */}
-                      </div>
+                      <div className="relative py-3"></div>
                     </div>
                   </div>
                 </div>
                 <div className="flex items-center md:absolute md:right-0 md:inset-y-0 lg:hidden">
                   {/* Mobile menu button */}
-                  <Popover.Button className="-mx-2 rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gray-500">
+                  <Popover.Button className="-mx-2 rounded-md p-2 inline-flex items-center justify-center  hover:bg-gray-100 hover: focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gray-500">
                     <span className="sr-only">Open menu</span>
                     {open ? (
                       <XIcon className="block h-6 w-6" aria-hidden="true" />
@@ -86,20 +94,20 @@ export default function Navbar() {
                   </Popover.Button>
                 </div>
                 <div className="hidden lg:flex lg:items-center lg:justify-end xl:col-span-4">
-                  {/* <a
-                    href="#"
-                    className="ml-5 flex-shrink-0 bg-white rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
-                  >
-                    <span className="sr-only">View notifications</span>
-                    <BellIcon className="h-6 w-6" aria-hidden="true" />
-                  </a> */}
-
+                  <span className="sr-only">View notifications</span>
+                  <EmojiIcon></EmojiIcon>
                   {/* Profile dropdown */}
                   <Menu as="div" className="flex-shrink-0 relative ml-5">
                     {({ open }) => (
                       <>
                         <div>
-                          <Menu.Button className="bg-white rounded-full flex focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+                          <Menu.Button
+                            style={{
+                              backgroundColor: currTheme.background,
+                              color: currTheme.foreground,
+                            }}
+                            className=" rounded-full flex focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+                          >
                             <span className="sr-only">Open user menu</span>
                             <img
                               className="h-8 w-8 rounded-full"
@@ -120,7 +128,11 @@ export default function Navbar() {
                         >
                           <Menu.Items
                             static
-                            className="origin-top-right absolute z-10 right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 py-1 focus:outline-none"
+                            style={{
+                              backgroundColor: currTheme.background,
+                              color: currTheme.foreground,
+                            }}
+                            className="origin-top-right absolute z-10 right-0 mt-2 w-48 rounded-md shadow-lg  ring-1 ring-black ring-opacity-5 py-1 focus:outline-none"
                           >
                             {userNavigation.map((item) => (
                               <Menu.Item key={item.name}>
@@ -129,7 +141,7 @@ export default function Navbar() {
                                     to={item.href}
                                     className={classNames(
                                       active ? "bg-gray-100" : "",
-                                      "block py-2 px-4 text-sm text-gray-700"
+                                      "block py-2 px-4 text-sm "
                                     )}
                                   >
                                     {item.name}
@@ -161,9 +173,7 @@ export default function Navbar() {
                     to={item.href}
                     aria-current={item.current ? "page" : undefined}
                     className={classNames(
-                      item.current
-                        ? "bg-gray-100 text-gray-900"
-                        : "hover:bg-gray-50",
+                      item.current ? "bg-gray-100 " : "hover:bg-gray-50",
                       "block rounded-md py-2 px-3 text-base font-medium"
                     )}
                   >
@@ -181,27 +191,18 @@ export default function Navbar() {
                     />
                   </div>
                   <div className="ml-3">
-                    <div className="text-base font-medium text-gray-800">
-                      {user.name}
-                    </div>
-                    <div className="text-sm font-medium text-gray-500">
-                      {user.email}
-                    </div>
+                    <div className="text-base font-medium ">{user.name}</div>
+                    <div className="text-sm font-medium ">{user.email}</div>
                   </div>
-                  <button
-                    type="button"
-                    className="ml-auto flex-shrink-0 bg-white rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
-                  >
-                    <span className="sr-only">View notifications</span>
-                    <BellIcon className="h-6 w-6" aria-hidden="true" />
-                  </button>
+                  <span className="sr-only">View notifications</span>
+                  <EmojiIcon></EmojiIcon>
                 </div>
                 <div className="mt-3 max-w-3xl mx-auto px-2 space-y-1 sm:px-4">
                   {userNavigation.map((item) => (
                     <Link
                       key={item.name}
                       to={item.href}
-                      className="block rounded-md py-2 px-3 text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900"
+                      className="block rounded-md py-2 px-3 text-base font-medium  hover:bg-gray-50 hover:text-gray-900"
                     >
                       {item.name}
                     </Link>

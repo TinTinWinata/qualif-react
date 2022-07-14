@@ -9,6 +9,8 @@ const REPOSITORY_LIST = gql`
           createdAt
           description
           pushedAt
+          nameWithOwner
+          url
           collaborators(last: 10) {
             nodes {
               name

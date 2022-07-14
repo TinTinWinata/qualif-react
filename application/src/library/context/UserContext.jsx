@@ -7,7 +7,8 @@ const context = createContext();
 export default function UserContextProvider({ children }) {
   let user;
 
-  const { data } = useQuery(GET_USER);
+  const { data, error } = useQuery(GET_USER);
+
   if (data) {
     user = data.user;
   }
