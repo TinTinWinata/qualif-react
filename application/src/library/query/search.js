@@ -3,11 +3,14 @@ import { gql } from "@apollo/client";
 const SEARCH = gql`
   query repository($name: String!, $owner: String!) {
     repository(name: $name, owner: $owner) {
+      id
       name
       description
       createdAt
       pushedAt
-
+      url
+      descriptionHTML
+      nameWithOwner
       collaborators(last: 10) {
         nodes {
           name
@@ -17,6 +20,7 @@ const SEARCH = gql`
       owner {
         repositories(last: 10) {
           nodes {
+            id
             name
             createdAt
             description

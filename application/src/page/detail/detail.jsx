@@ -5,7 +5,10 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import SEARCH from "../../library/query/search";
 import Main from "./main";
+import NotFound from "./notfound";
 import Profile from "./profile";
+
+const RANDOM_QUOTE = 50;
 
 export default function Detail() {
   const Container = styled("div")`
@@ -15,6 +18,9 @@ export default function Detail() {
   const { id } = useParams();
 
   const [image, setImage] = useState();
+  const [quote, setQuote] = useState([
+    { text: "I Love you so much", author: "TinTin Winata" },
+  ]);
 
   useEffect(() => {
     const stripIdx = id.indexOf("-");
@@ -24,9 +30,13 @@ export default function Detail() {
     const url = `https://api.unsplash.com/search/photos/?query=${repoName}&client_id=${process.env.REACT_APP_UNSPLASH_API_TOKEN}`;
 
     axios.get(url).then((res) => {
-      console.log(res.data);
-      if (res.data.total === 0) setImage("https://picsum.photos/200");
+      if (res.data.total === 0) setImage("https://picsum.photos/500/500");
       else setImage(res.data.results[0].urls.regular);
+    });
+
+    axios.get("https://type.fit/api/quotes").then((response) => {
+      const data = response.data;
+      setQuote(data.slice(1, RANDOM_QUOTE));
     });
 
     return () => {};
@@ -48,10 +58,12 @@ export default function Detail() {
 
   if (loading) return <div></div>;
 
+  if (!data) return <NotFound></NotFound>;
+
   return (
     <Container>
-      <Profile props={data.repository.owner}></Profile>
-      <Main props={data.repository} image={image}></Main>
+      <Profile repo={data.repository} props={data.repository.owner}></Profile>
+      <Main props={data.repository} image={image} quote={quote}></Main>
     </Container>
   );
 }

@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext } from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
 
 export const LOCAL_STORAGE_KEY = 1;
@@ -8,18 +8,40 @@ const context = createContext();
 export default function FavoriteProvider({ children }) {
   const [favorite, setFavorite] = useLocalStorage(LOCAL_STORAGE_KEY, []);
 
-  function handleFav(name) {
+  function checkFav(repo) {
+    const idx = searchFav(repo);
+    if (idx === -1) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  function searchFav(repo) {
+    let found = favorite
+      .map((e) => {
+        const obj = JSON.parse(e);
+        return obj.id;
+      })
+      .indexOf(repo.id);
+    return found;
+  }
+
+  function handleFav(repo) {
     let newArr = [...favorite];
-    let found = favorite.indexOf(name);
+
+    const found = searchFav(repo);
+
     if (found === -1) {
-      newArr.push(name);
+      const repoJson = JSON.stringify(repo);
+      newArr.push(repoJson);
     } else {
       newArr.splice(found, 1);
     }
     setFavorite(newArr);
   }
   return (
-    <context.Provider value={{ handleFav, favorite }}>
+    <context.Provider value={{ handleFav, favorite, checkFav, searchFav }}>
       {children}
     </context.Provider>
   );

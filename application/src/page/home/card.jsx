@@ -1,15 +1,12 @@
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
+import { computeHeadingLevel } from "@testing-library/react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useFav } from "../../library/context/FavoriteContext";
+import { useTheme } from "../../library/context/ThemeContext";
 import { GetUser } from "../../library/context/UserContext";
-
-const Container = styled.div`
-  margin-left: 10px;
-  margin-top: 3px;
-  padding: 20px;
-  overflow: auto;
-`;
+import MEDIA_QUERY from "../../library/mediaquery";
 
 const StyledCardDescription = styled("p")``;
 
@@ -18,14 +15,31 @@ const StyledCardName = styled("p")`
   font-weight: bold;
 `;
 
-const StyledCardButton = styled.button``;
-
 export function CardButton({ repo, children }) {
-  const { user } = GetUser();
-  const navigate = useNavigate();
+  const { currTheme } = useTheme();
+  const { handleFav, checkFav } = useFav();
+
+  const isFav = checkFav(repo);
+  const mainColor = isFav ? currTheme.favorite : currTheme.foreground;
+  const secondColor = isFav
+    ? currTheme.hoverFavorite
+    : currTheme.moreForeground;
+
   const handleClick = () => {
-    navigate("/detail/" + user.login + "-" + repo.name);
+    handleFav(repo);
   };
+
+  const StyledCardButton = styled.button`
+    background-color: ${mainColor};
+    color: ${currTheme.backdrop};
+    font-size: 12px;
+    padding: 3px 10px;
+    margin-top: 6px;
+    border-radius: 30px;
+    &:hover {
+      background-color: ${secondColor};
+    }
+  `;
 
   return <StyledCardButton onClick={handleClick}>{children}</StyledCardButton>;
 }
@@ -42,6 +56,29 @@ export function CardDetail({ children }) {
   );
 }
 
+export function CardTitleContainer({ repo, children }) {
+  const navigate = useNavigate();
+  const { user } = GetUser();
+  const handleClick = () => {
+    navigate("/detail/" + user.login + "-" + repo.name);
+  };
+
+  return <div onClick={handleClick}>{children}</div>;
+}
+
 export default function Card({ children }) {
+  const Container = styled.div`
+    margin-left: 10px;
+    margin-top: 3px;
+    padding: 20px;
+    overflow: auto;
+    width: 300px;
+    cursor: pointer;
+    border-radius: 15px;
+    ${MEDIA_QUERY[1]} {
+      width: 100%;
+    }
+  `;
+
   return <Container>{children}</Container>;
 }

@@ -1,16 +1,9 @@
 import { Link } from "react-router-dom";
 import { Fragment } from "react";
 import { Menu, Popover, Transition } from "@headlessui/react";
-import { SearchIcon } from "@heroicons/react/solid";
-import {
-  BellIcon,
-  EmojiHappyIcon,
-  MenuIcon,
-  XIcon,
-} from "@heroicons/react/outline";
+import { EmojiHappyIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 import { GetUser } from "../library/context/UserContext";
 import { useTheme } from "../library/context/ThemeContext";
-import { css } from "@emotion/react";
 import { Loading } from "./loading";
 
 const navigation = [];
@@ -93,8 +86,9 @@ export default function Navbar() {
                     )}
                   </Popover.Button>
                 </div>
-                <div className="hidden lg:flex lg:items-center lg:justify-end xl:col-span-4">
+                <div className="hidden  lg:flex lg:items-center lg:justify-end xl:col-span-4">
                   <span className="sr-only">View notifications</span>
+
                   <EmojiIcon></EmojiIcon>
                   {/* Profile dropdown */}
                   <Menu as="div" className="flex-shrink-0 relative ml-5">
@@ -195,7 +189,10 @@ export default function Navbar() {
                     <div className="text-sm font-medium ">{user.email}</div>
                   </div>
                   <span className="sr-only">View notifications</span>
-                  <EmojiIcon></EmojiIcon>
+
+                  <div className="ml-1">
+                    <EmojiIcon></EmojiIcon>
+                  </div>
                 </div>
                 <div className="mt-3 max-w-3xl mx-auto px-2 space-y-1 sm:px-4">
                   {userNavigation.map((item) => (
