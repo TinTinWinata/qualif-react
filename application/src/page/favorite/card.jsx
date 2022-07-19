@@ -61,7 +61,7 @@ export default function Card({ repo }) {
   return (
     <Container>
       <div className="ml-10">
-        <div className="flex">
+        <div className="flex break-all">
           <StyledName>
             {repo.name}{" "}
             <StyledNameWithOwner>

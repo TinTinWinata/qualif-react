@@ -12,32 +12,48 @@ export default function Main({ props, image, quote }) {
   };
 
   const StyledTitle = styled.div`
-    margin-top: 20px;
+    margin-top: 50px;
     font-weight: 1000;
     word-wrap: break-word;
+    text-align: center;
+
+    ${MEDIA_QUERY[1]} {
+      text-align: left;
+    }
   `;
 
   const StyledImage = styled.div`
-    margin-top: 15px;
-    width: 100%;
+    margin: 30px auto;
+    width: 50%;
     height: 400px;
     background-image: url(${image});
     background-size: cover;
 
     ${MEDIA_QUERY[0]} {
+      width: 100%;
       height: 200px;
     }
   `;
 
   const StyledName = styled("p")`
     color: ${currTheme.detail};
+    text-align: center;
+    font-weight: 100;
     font-size: 14px;
   `;
 
   const StyledDescription = styled("div")`
     background-color: ${currTheme.moreBackdrop};
     padding: 10px;
+    margin-left: 50px;
+    margin-right: 50px;
     margin-top: 20px;
+    text-indent: 2em;
+    letter-spacing: 0.8px;
+    ${MEDIA_QUERY[1]} {
+      margin-left: 0px;
+      margin-right: 0px;
+    }
   `;
 
   const StyledButton = styled("button")`
