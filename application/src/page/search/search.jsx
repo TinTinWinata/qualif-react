@@ -17,6 +17,7 @@ export default function Search() {
 
   const Container = styled("div")`
     position: absolute;
+    width: 40%;
     transform: translate(-50%, -50%);
     left: 50%;
     top: 50%;
@@ -29,26 +30,28 @@ export default function Search() {
   const StyledInput = styled("input")`
     color: ${currTheme.inputColor};
     border-radius: 10px;
-    padding: 5px;
+    padding: 5px 15px;
   `;
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const repo = e.target.repo.value;
-    const username = e.target.username.value;
+    const username = "TinTinWinata";
     navigate("/detail/" + username + "-" + repo);
   };
 
   return (
     <Container>
       <form onSubmit={handleSubmit}>
-        <div className="flex flex-col">
+        <div className="flex flex-col w-full">
           <div className="w-full">
-            <StyledLabel htmlFor="">Github Username</StyledLabel>
-            <StyledInput name="username" className="w-full" type="text" />
-
             <StyledLabel htmlFor="">Repository Name</StyledLabel>
-            <StyledInput name="repo" className="w-full" type="text" />
+            <StyledInput
+              placeholder="CHello"
+              name="repo"
+              className="w-full"
+              type="text"
+            />
           </div>
 
           <StyledButton type="submit">Submit</StyledButton>

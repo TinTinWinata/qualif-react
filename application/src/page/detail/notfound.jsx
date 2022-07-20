@@ -36,7 +36,6 @@ export default function NotFound() {
     <Container>
       <StyledP>
         The repository was not found! Please input a different repository name
-        and owner
       </StyledP>
       <StyledButton
         onClick={handleButton}

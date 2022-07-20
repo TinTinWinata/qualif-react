@@ -44,7 +44,7 @@ export default function Main({ props, image, quote }) {
 
   const StyledDescription = styled("div")`
     background-color: ${currTheme.moreBackdrop};
-    padding: 10px;
+    padding: 50px;
     margin-left: 50px;
     margin-right: 50px;
     margin-top: 20px;

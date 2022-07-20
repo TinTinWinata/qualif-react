@@ -54,9 +54,11 @@ export default function Detail() {
     },
   };
 
-  const { loading, data } = useQuery(SEARCH, OPTIONS);
+  const { loading, error, data } = useQuery(SEARCH, OPTIONS);
 
   if (loading) return <div></div>;
+
+  if (error) console.log(error);
 
   if (!data) return <NotFound></NotFound>;
 
