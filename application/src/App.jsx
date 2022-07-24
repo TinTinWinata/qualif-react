@@ -45,32 +45,27 @@ function App() {
   });
 
   return (
-    <React.Fragment>
-      <BrowserRouter>
-        <ApolloProvider client={client}>
-          <FavoriteProvider>
-            <ThemeProvider>
-              <UserContextProvider>
-                <Navbar></Navbar>
-                <Routes>
-                  <Route path="/" element={<Home></Home>}></Route>
-                  <Route path="/home" element={<Home></Home>}></Route>
-                  <Route
-                    path="/favorite"
-                    element={<Favorite></Favorite>}
-                  ></Route>
-                  <Route
-                    path="/search-repository"
-                    element={<Search></Search>}
-                  ></Route>
-                  <Route path="/detail/:id" element={<Detail></Detail>}></Route>
-                </Routes>
-              </UserContextProvider>
-            </ThemeProvider>
-          </FavoriteProvider>
-        </ApolloProvider>
-      </BrowserRouter>
-    </React.Fragment>
+    <BrowserRouter>
+      <ApolloProvider client={client}>
+        <FavoriteProvider>
+          <ThemeProvider>
+            <UserContextProvider>
+              <Navbar></Navbar>
+              <Routes>
+                <Route path="/" element={<Home></Home>}></Route>
+                <Route path="/home" element={<Home></Home>}></Route>
+                <Route path="/favorite" element={<Favorite></Favorite>}></Route>
+                <Route
+                  path="/search-repository"
+                  element={<Search></Search>}
+                ></Route>
+                <Route path="/detail/:id" element={<Detail></Detail>}></Route>
+              </Routes>
+            </UserContextProvider>
+          </ThemeProvider>
+        </FavoriteProvider>
+      </ApolloProvider>
+    </BrowserRouter>
   );
 }
 

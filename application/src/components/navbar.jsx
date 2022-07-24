@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { Fragment } from "react";
 import { Menu, Popover, Transition } from "@headlessui/react";
 import { EmojiHappyIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
@@ -33,6 +33,7 @@ function EmojiIcon() {
 
 export default function Navbar() {
   const { currTheme } = useTheme();
+  const navigate = useNavigate();
 
   const { user } = GetUser();
   if (!user) {
@@ -196,13 +197,15 @@ export default function Navbar() {
                 </div>
                 <div className="mt-3 max-w-3xl mx-auto px-2 space-y-1 sm:px-4">
                   {userNavigation.map((item) => (
-                    <Link
+                    <Popover.Button
                       key={item.name}
-                      to={item.href}
+                      onClick={() => {
+                        navigate(item.href);
+                      }}
                       className="block rounded-md py-2 px-3 text-base font-medium  hover:bg-gray-50 hover:text-gray-900"
                     >
                       {item.name}
-                    </Link>
+                    </Popover.Button>
                   ))}
                 </div>
               </div>
