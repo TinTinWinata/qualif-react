@@ -1,9 +1,9 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 const REPOSITORY_LIST = gql`
   query {
     user(login: ${'"' + process.env.REACT_APP_GITHUB_LOGIN_NAME + '"'}) {
-      repositories(last: 10) {
+      repositories(last: 10, privacy: PUBLIC) {
         nodes {
           id
           name

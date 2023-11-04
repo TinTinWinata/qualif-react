@@ -1,16 +1,14 @@
-import { css } from "@emotion/react";
-import styled from "@emotion/styled";
-import { computeHeadingLevel } from "@testing-library/react";
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import { useFav } from "../../library/context/FavoriteContext";
-import { useTheme } from "../../library/context/ThemeContext";
-import { GetUser } from "../../library/context/UserContext";
-import MEDIA_QUERY from "../../library/mediaquery";
+import styled from '@emotion/styled';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useFav } from '../../library/context/FavoriteContext';
+import { useTheme } from '../../library/context/ThemeContext';
+import { GetUser } from '../../library/context/UserContext';
+import MEDIA_QUERY from '../../library/mediaquery';
 
-const StyledCardDescription = styled("p")``;
+const StyledCardDescription = styled('p')``;
 
-const StyledCardName = styled("p")`
+const StyledCardName = styled('p')`
   padding-bottom: 4px;
   font-weight: bold;
 `;
@@ -60,7 +58,7 @@ export function CardTitleContainer({ repo, children }) {
   const navigate = useNavigate();
   const { user } = GetUser();
   const handleClick = () => {
-    navigate("/detail/" + user.login + "-" + repo.name);
+    navigate('/detail/' + user.login + '-' + repo.name);
   };
 
   return <div onClick={handleClick}>{children}</div>;
@@ -73,6 +71,13 @@ export default function Card({ children }) {
     padding: 20px;
     overflow: auto;
     width: 300px;
+    height: 130px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.05);
     cursor: pointer;
     border-radius: 15px;
     ${MEDIA_QUERY[1]} {

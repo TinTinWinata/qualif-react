@@ -1,21 +1,21 @@
-import { useQuery } from "@apollo/client";
-import styled from "@emotion/styled";
-import React, { createRef, useEffect, useState } from "react";
-import { useTheme } from "../../library/context/ThemeContext";
-import MEDIA_QUERY from "../../library/mediaquery";
-import REPOSITORY_LIST from "../../library/query/repositoryList";
+import { useQuery } from '@apollo/client';
+import styled from '@emotion/styled';
+import React, { createRef, useEffect, useState } from 'react';
+import { useTheme } from '../../library/context/ThemeContext';
+import MEDIA_QUERY from '../../library/mediaquery';
+import REPOSITORY_LIST from '../../library/query/repositoryList';
 import Card, {
   CardButton,
   CardDetail,
   CardName,
   CardTitleContainer,
-} from "./card";
+} from './card';
 
 export default function RepositoryList() {
   const searchRef = createRef();
 
   const [filtered, setFiltered] = useState([]);
-  const [text, setText] = useState("");
+  const [text, setText] = useState('');
 
   const { currTheme } = useTheme();
 
@@ -25,13 +25,14 @@ export default function RepositoryList() {
     flex-wrap: wrap;
     flex-direction: row;
     justify-content: space-around;
-
+    gap: 30px;
+    padding: 0px 30px;
     ${MEDIA_QUERY[1]} {
       flex-direction: column;
     }
   `;
 
-  const StyledInput = styled("input")`
+  const StyledInput = styled('input')`
     color: ${currTheme.inputColor};
     border-radius: 20px;
     padding: 5px 10px;
@@ -45,7 +46,7 @@ export default function RepositoryList() {
     }
   `;
 
-  const StyledButton = styled("button")`
+  const StyledButton = styled('button')`
     margin-left: 10px;
     color: ${currTheme.background};
     padding: 0px 30px;
@@ -59,7 +60,7 @@ export default function RepositoryList() {
     }
   `;
 
-  const StyledSearchContainer = styled("form")`
+  const StyledSearchContainer = styled('form')`
     display: flex;
     justify-content: center;
     margin: 10px;
